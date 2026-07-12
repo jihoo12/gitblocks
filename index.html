@@ -256,25 +256,6 @@
   #towerWrap{
     display:flex;
     justify-content:center;
-    gap:14px;
-    align-items:flex-end;
-  }
-  .ruler{
-    display:flex;
-    flex-direction:column-reverse;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10px;
-    color:#2a4a6a;
-    text-align:right;
-    padding-bottom:22px;
-  }
-  .ruler .tick{
-    height:90px;
-    display:flex;
-    align-items:flex-end;
-    justify-content:flex-end;
-    padding-right:6px;
-    border-right:1px solid rgba(30,60,90,0.25);
   }
 
   .tower-col{
@@ -282,17 +263,243 @@
     flex-direction:column;
     align-items:center;
   }
+
+  /* carved milestone plaques set into the wall — belongs to the tower, not to an axis */
+  .plaque-row{
+    display:flex;
+    justify-content:center;
+    padding:2px 0;
+  }
+  .plaque{
+    position:relative;
+    padding:3px 14px;
+    background:linear-gradient(180deg, #7d7157, #5c5240);
+    border-radius:2px;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,0.14),
+      inset 0 -3px 0 rgba(0,0,0,0.35),
+      0 2px 3px rgba(0,0,0,0.3);
+  }
+  .plaque .n{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:0.05em;
+    color:#2c2417;
+    text-shadow:0 1px 0 rgba(255,255,255,0.18), 0 -1px 0 rgba(0,0,0,0.4);
+  }
+
+  /* roof cone — tiled conical turret roof, built as a clipped triangle so it can carry a tile texture */
+  .roof-wrap{
+    position:relative;
+    z-index:3;
+    display:flex;
+    justify-content:center;
+  }
+  .roof{
+    width:168px; height:92px;
+    clip-path: polygon(50% 0%, 4% 100%, 96% 100%);
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 2px, transparent 2px 9px),
+      linear-gradient(180deg, #4a5f70 0%, #33465580 55%, #263440 100%);
+    background-color:#3d4f5e;
+    filter:drop-shadow(0 3px 4px rgba(20,30,40,0.35));
+  }
+  .weathervane{
+    position:absolute;
+    left:50%; top:-24px;
+    transform:translateX(-50%);
+    width:2px; height:24px;
+    background:#caa24d;
+  }
+  .weathervane::before{
+    content:'';
+    position:absolute; top:2px; left:-9px;
+    width:20px; height:9px;
+    background:#caa24d;
+    clip-path: polygon(0% 40%, 65% 0%, 65% 30%, 100% 30%, 100% 70%, 65% 70%, 65% 100%);
+  }
+  .weathervane::after{
+    content:'';
+    position:absolute; top:-3px; left:-3px;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #f3d98a, #a97e22);
+  }
+
+  /* the stone ring beneath the parapet — drawn flat, front-on, no implied ellipse/perspective */
+  .cap{
+    width:172px; height:14px;
+    border-radius:3px 3px 0 0;
+    background:var(--stone-2);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+    margin-bottom:0;
+    position:relative;
+    z-index:2;
+  }
+
+  /* corbel table / machicolations: stone brackets projecting below the parapet, historically for dropping things on attackers */
+  .machicolations{
+    display:flex;
+    justify-content:center;
+    gap:3px;
+    position:relative;
+    z-index:2;
+    margin-bottom:-2px;
+  }
+  .machicolations span{
+    width:9px; height:10px;
+    background:linear-gradient(180deg, var(--stone-3), var(--stone-4));
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  /* crenellations: solid merlons alternating with genuinely open crenels (dark gaps) along the parapet */
+  .crenellations{
+    display:flex;
+    gap:6px;
+    justify-content:center;
+    position:relative;
+    z-index:2;
+    margin-bottom:-4px;
+    background:#241c12;
+    padding:0 4px;
+    border-radius:2px 2px 0 0;
+  }
+  .crenellations span{
+    width:14px; height:16px;
+    background:linear-gradient(180deg, var(--stone-2), var(--stone-3));
+    border-radius:1px 1px 0 0;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+    align-self:flex-end;
+  }
+  .crenellations span.gap{
+    background:transparent;
+    box-shadow:none;
+    height:9px;
+  }
+
+  /* shell wraps the block grid and defines the tower's flat, front-elevation silhouette */
+  .tower-shell{
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 8px 16px rgba(20,30,40,0.22);
+    background:#4a4030;
+    clip-path: polygon(7% 0%, 93% 0%, 100% 100%, 0% 100%);
+    border:2px solid #241c12;
+    border-bottom:none;
+  }
+  .tower-shell .slit{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    width:34px;
+    height:34px;
+    background:#241c12;
+    border-radius:4px;
+    box-shadow:inset 0 0 4px rgba(0,0,0,0.6);
+    z-index:3;
+    pointer-events:none;
+  }
+
+  /* arched, iron-bound wooden door set into the base of the tower */
+  .door{
+    position:absolute;
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+    width:38px;
+    height:52px;
+    background:#5f3f22;
+    border-radius:19px 19px 0 0;
+    box-shadow: inset 0 0 0 2px #2c1c0d;
+    z-index:3;
+    pointer-events:none;
+  }
+  .door::before, .door::after{
+    /* iron cross-straps */
+    content:'';
+    position:absolute;
+    left:3px; right:3px;
+    height:4px;
+    background:#2c2c2c;
+    border-radius:1px;
+  }
+  .door::before{ top:12px; }
+  .door::after{ bottom:14px; }
+  .door .ring{
+    position:absolute;
+    left:50%; top:26px;
+    transform:translateX(-50%);
+    width:6px; height:6px;
+    border-radius:50%;
+    border:2px solid #2c2c2c;
+    background:transparent;
+  }
+
+  /* creeping ivy softening the lowest courses */
+  .ivy{
+    position:absolute;
+    z-index:3;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 30% 30%, #4f7a34 0 5px, transparent 6px),
+      radial-gradient(circle at 65% 55%, #3f6b28 0 6px, transparent 7px),
+      radial-gradient(circle at 45% 75%, #547f3a 0 5px, transparent 6px),
+      radial-gradient(circle at 80% 25%, #486e2e 0 4px, transparent 5px);
+  }
+  .ivy-l{ left:2px; bottom:0; width:34px; height:64px; }
+  .ivy-r{ right:2px; bottom:0; width:26px; height:44px; }
+
+  /* torch sconces flanking the tower, partway up */
+  .sconce{
+    position:absolute;
+    top:38%;
+    width:7px; height:12px;
+    background:linear-gradient(180deg, #3a3a3a, #1c1c1c);
+    border-radius:1px;
+    z-index:3;
+    pointer-events:none;
+  }
+  .sconce::before{
+    content:'';
+    position:absolute;
+    top:-11px; left:50%;
+    transform:translateX(-50%);
+    width:7px; height:11px;
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    background:radial-gradient(circle at 50% 30%, #ffe9a8, #f0a63a 55%, #c65a1e 90%);
+    box-shadow:0 0 8px 2px rgba(255,170,60,0.55);
+    animation:flicker 1.6s ease-in-out infinite;
+  }
+  .sconce-l{ left:-3px; }
+  .sconce-r{ right:-3px; }
+  @keyframes flicker{
+    0%,100%{ opacity:1; transform:translateX(-50%) scaleY(1); }
+    45%{ opacity:0.85; transform:translateX(-50%) scaleY(0.92); }
+    70%{ opacity:1; transform:translateX(-50%) scaleY(1.05); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .sconce::before{ animation:none !important; }
+  }
+  .tower-shell .slit-1{ top:22%; }
+  .tower-shell .slit-2{ top:58%; }
+
   .tower{
     display:flex;
     flex-direction:column-reverse;
+    gap:2px;
+    position:relative;
+    z-index:1;
   }
   .row{
     display:flex;
-    gap:2px;
-    padding:1px 4px;
+    justify-content:center;
+    gap:3px;
+    padding:0 4px;
   }
   .block{
-    width:18px; height:18px;
+    width:18px; height:16px;
     border-radius:1px;
     opacity:0;
     transform:translateY(6px);
@@ -300,11 +507,12 @@
     background-repeat:no-repeat;
     background-blend-mode: overlay, overlay, overlay, overlay, overlay;
     box-shadow:
-      inset 0 -3px 0 rgba(0,0,0,0.32),
-      inset 0 2px 0 rgba(255,255,255,0.35),
-      inset -2px 0 0 rgba(0,0,0,0.15),
-      inset 2px 0 0 rgba(255,255,255,0.12);
+      0 0 0 1px rgba(36,28,18,0.55),
+      0 1.5px 0 rgba(20,15,8,0.5);
   }
+  /* half-stones at the ends of an offset course — this, not a transform, is what
+     makes vertical joints land mid-stone on the course above/below (a true running bond) */
+  .block.filler{ width:7.5px; }
   @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
 
   /* stone speckle textures — three variants so neighboring blocks don't look identical */
@@ -339,12 +547,21 @@
   .lvl3{background-color:var(--stone-3);}
   .lvl4{background-color:var(--stone-4);}
 
+  .base-ring{
+    width:196px; height:16px;
+    border-radius:2px;
+    background:var(--stone-4);
+    box-shadow: 0 0 0 1px rgba(36,28,18,0.55);
+    margin-top:0;
+    position:relative;
+    z-index:2;
+  }
   .ground{
-    width:100%;
-    max-width:300px;
-    height:22px;
-    background:linear-gradient(180deg, var(--grass-top), var(--grass-bottom));
-    border-radius:50% 50% 6px 6px / 100% 100% 8px 8px;
+    width:264px;
+    height:20px;
+    background:var(--grass-bottom);
+    border-radius:0 0 40px 40px / 0 0 16px 16px;
+    margin-top:0;
     box-shadow:0 6px 10px rgba(20,30,10,0.25);
   }
 
@@ -411,10 +628,29 @@
     <div class="scale-note" id="scaleNote"></div>
 
     <div id="towerWrap" class="hidden">
-      <div class="ruler" id="ruler"></div>
       <div class="tower-col">
-        <div class="flag" id="flag">↑ most recent</div>
-        <div class="tower" id="tower"></div>
+        <div class="flag" id="flag">the newest stone crowns the tower</div>
+        <div class="roof-wrap">
+          <div class="roof"><div class="weathervane"></div></div>
+        </div>
+        <div class="crenellations">
+          <span></span><span class="gap"></span><span></span><span class="gap"></span><span></span><span class="gap"></span><span></span><span class="gap"></span><span></span>
+        </div>
+        <div class="machicolations">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="cap"></div>
+        <div class="tower-shell">
+          <div class="slit slit-1"></div>
+          <div class="slit slit-2"></div>
+          <div class="sconce sconce-l"></div>
+          <div class="sconce sconce-r"></div>
+          <div class="ivy ivy-l"></div>
+          <div class="ivy ivy-r"></div>
+          <div class="door"><div class="ring"></div></div>
+          <div class="tower" id="tower"></div>
+        </div>
+        <div class="base-ring"></div>
         <div class="ground"></div>
       </div>
     </div>
@@ -429,13 +665,11 @@ const statusEl = document.getElementById('status');
 const statsRow = document.getElementById('statsRow');
 const towerWrap = document.getElementById('towerWrap');
 const towerEl = document.getElementById('tower');
-const rulerEl = document.getElementById('ruler');
 const scaleNoteEl = document.getElementById('scaleNote');
 
-const COLS = 8;
 const MAX_BLOCKS = 1400;
-const ROW_HEIGHT_PX = 18;
-const ROWS_PER_TICK = 10;
+const COLS = 8; // full stones per straight course
+const PLAQUE_EVERY_ROWS = 40; // a carved milestone stone every N courses, only on tall towers
 
 function setStatus(msg, isError){
   statusEl.textContent = msg;
@@ -453,7 +687,6 @@ async function buildTower(){
   towerWrap.classList.add('hidden');
   scaleNoteEl.textContent = '';
   towerEl.innerHTML = '';
-  rulerEl.innerHTML = '';
   setStatus('surveying the plot…');
 
   try{
@@ -497,16 +730,43 @@ async function buildTower(){
       blocks.push({ level: last?.level ?? 1, date: last?.date });
     }
 
+    // running bond: straight courses of COLS full stones alternate with courses
+    // that are one stone shorter but bookended by half-stones — this is what makes
+    // every vertical joint land at the midpoint of the stones above and below it.
     const rows = [];
-    for(let i = 0; i < blocks.length; i += COLS){
-      rows.push(blocks.slice(i, i + COLS));
+    let cursor = 0;
+    let rowIdx = 0;
+    while(cursor < blocks.length){
+      const isOffset = rowIdx % 2 === 1;
+      const need = isOffset ? COLS - 1 : COLS;
+      const stones = blocks.slice(cursor, cursor + need);
+      if(stones.length === 0) break;
+      rows.push({ offset: isOffset, stones });
+      cursor += stones.length;
+      rowIdx++;
     }
+    const totalRows = rows.length;
+    const showPlaques = totalRows >= 24;
 
     let globalIndex = 0;
-    rows.forEach((row) => {
+    let fillerIndex = 0;
+    let contributionsSoFar = 0;
+    rows.forEach((row, ri) => {
       const rowEl = document.createElement('div');
       rowEl.className = 'row';
-      row.forEach(b => {
+
+      const makeFiller = () => {
+        const fillerEl = document.createElement('div');
+        const texVariant = ['tex-a', 'tex-b', 'tex-c'][fillerIndex % 3];
+        fillerEl.className = 'block filler ' + texVariant + ' lvl2';
+        fillerEl.style.animationDelay = (Math.min(globalIndex, 220) * 6) + 'ms';
+        fillerIndex++;
+        return fillerEl;
+      };
+
+      if(row.offset) rowEl.appendChild(makeFiller());
+
+      row.stones.forEach(b => {
         const blockEl = document.createElement('div');
         const texVariant = ['tex-a', 'tex-b', 'tex-c'][globalIndex % 3];
         blockEl.className = 'block ' + texVariant + ' lvl' + Math.max(1, Math.min(4, b.level || 1));
@@ -517,26 +777,24 @@ async function buildTower(){
         rowEl.appendChild(blockEl);
         globalIndex++;
       });
-      towerEl.appendChild(rowEl);
-    });
 
-    const totalRows = rows.length;
-    for(let r = ROWS_PER_TICK; r <= totalRows; r += ROWS_PER_TICK){
-      const tick = document.createElement('div');
-      tick.className = 'tick';
-      tick.style.height = (ROWS_PER_TICK * ROW_HEIGHT_PX) + 'px';
-      const contributionsAtRow = Math.min(total, r * COLS * scale);
-      tick.textContent = contributionsAtRow;
-      rulerEl.appendChild(tick);
-    }
-    const remainder = totalRows % ROWS_PER_TICK;
-    if(remainder > 0){
-      const tick = document.createElement('div');
-      tick.className = 'tick';
-      tick.style.height = (remainder * ROW_HEIGHT_PX) + 'px';
-      tick.textContent = '';
-      rulerEl.appendChild(tick);
-    }
+      if(row.offset) rowEl.appendChild(makeFiller());
+
+      contributionsSoFar = Math.min(total, contributionsSoFar + row.stones.length * scale);
+      towerEl.appendChild(rowEl);
+
+      // every so often, set a carved stone into the wall marking progress —
+      // part of the architecture, not a chart axis running alongside it.
+      if(showPlaques && ri > 0 && ri < totalRows - 3 && ri % PLAQUE_EVERY_ROWS === 0){
+        const plaqueRow = document.createElement('div');
+        plaqueRow.className = 'plaque-row';
+        const plaque = document.createElement('div');
+        plaque.className = 'plaque';
+        plaque.innerHTML = `<span class="n">${contributionsSoFar.toLocaleString()}</span>`;
+        plaqueRow.appendChild(plaque);
+        towerEl.appendChild(plaqueRow);
+      }
+    });
 
     document.getElementById('avatar').src = `https://github.com/${encodeURIComponent(username)}.png`;
     document.getElementById('statName').textContent = username;
@@ -544,8 +802,8 @@ async function buildTower(){
     document.getElementById('statBlocks').textContent = blocks.length.toLocaleString();
     document.getElementById('statHeight').textContent = totalRows.toLocaleString();
     scaleNoteEl.textContent = scale > 1
-      ? `tower scaled down — each stone represents ~${scale} contributions`
-      : `each stone below is exactly 1 contribution`;
+      ? `the masons compressed the work — each stone stands for ~${scale} contributions`
+      : `every stone here is a single contribution`;
 
     statsRow.classList.remove('hidden');
     towerWrap.classList.remove('hidden');
